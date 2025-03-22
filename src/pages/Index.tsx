@@ -1,19 +1,23 @@
+import { useState, useEffect } from "react";
+import Header from "@/components/Header";
+import InputForm from "@/components/InputForm";
+import ResultsPanel from "@/components/ResultsPanel";
+import {
+  startRegexGeneration,
+  getGenerationState,
+} from "@/services/regexService";
+import { GenerationState } from "@/types";
 
-import React, { useState, useEffect } from 'react';
-import Header from '@/components/Header';
-import InputForm from '@/components/InputForm';
-import ResultsPanel from '@/components/ResultsPanel';
-import { startRegexGeneration, getGenerationState } from '@/services/regexService';
-import { GenerationState } from '@/types';
+const POLL_INTERVAL = 1000;
 
 const Index = () => {
   const [state, setState] = useState<GenerationState>({
-    userInput: '',
+    userInput: "",
     isGenerating: false,
     currentIteration: 0,
     maxIterations: 5,
     iterations: [],
-    showResults: false
+    showResults: false,
   });
 
   // Poll for state updates when generation is in progress
@@ -24,9 +28,9 @@ const Index = () => {
       intervalId = window.setInterval(async () => {
         try {
           const newState = await getGenerationState();
-          setState(prevState => ({
+          setState((prevState) => ({
             ...prevState,
-            ...newState
+            ...newState,
           }));
 
           // Stop polling once generation is complete
@@ -34,10 +38,10 @@ const Index = () => {
             clearInterval(intervalId);
           }
         } catch (error) {
-          console.error('Error polling for generation state:', error);
+          console.error("Error polling for generation state:", error);
           clearInterval(intervalId);
         }
-      }, 1000);
+      }, POLL_INTERVAL);
     }
 
     return () => {
@@ -47,26 +51,26 @@ const Index = () => {
 
   const handleSubmit = async (input: string) => {
     try {
-      setState(prevState => ({
+      setState((prevState) => ({
         ...prevState,
         isGenerating: true,
         userInput: input,
-        showResults: false
+        showResults: false,
       }));
-      
+
       await startRegexGeneration(input);
-      
+
       // Initial state update after starting generation
       const initialState = await getGenerationState();
-      setState(prevState => ({
+      setState((prevState) => ({
         ...prevState,
-        ...initialState
+        ...initialState,
       }));
     } catch (error) {
-      console.error('Error starting regex generation:', error);
-      setState(prevState => ({
+      console.error("Error starting regex generation:", error);
+      setState((prevState) => ({
         ...prevState,
-        isGenerating: false
+        isGenerating: false,
       }));
     }
   };
@@ -75,15 +79,12 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground p-4 sm:p-6">
       <div className="max-w-6xl mx-auto">
         <Header />
-        
+
         <main className="py-6 flex flex-col items-center">
           <div className="w-full max-w-4xl">
-            <InputForm 
-              onSubmit={handleSubmit} 
-              isLoading={state.isGenerating} 
-            />
+            <InputForm onSubmit={handleSubmit} isLoading={state.isGenerating} />
 
-            <ResultsPanel 
+            <ResultsPanel
               userInput={state.userInput}
               currentIteration={state.currentIteration}
               maxIterations={state.maxIterations}

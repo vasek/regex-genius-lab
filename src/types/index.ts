@@ -1,14 +1,14 @@
-
 export interface Agent {
-  id: number;
-  status: 'pending' | 'evaluating' | 'completed';
+  id: string;
+  status: "pending" | "evaluating" | "completed";
   regex?: string;
   score?: number;
+  failures?: string[];
 }
 
 export interface TestCases {
-  passing: string[];
-  failing: string[];
+  valid: string[];
+  invalid: string[];
 }
 
 export interface Iteration {
