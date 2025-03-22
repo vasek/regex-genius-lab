@@ -1,5 +1,9 @@
 # Welcome to your Lovable project
 
+# Regex Arena Frontend
+
+This repository contains the frontend implementation for [Regex Arena](https://github.com/jukben/regex-arena).
+
 ## Project info
 
 **URL**: https://lovable.dev/projects/2f257d7c-bc9e-431d-b4b1-965949edb126
