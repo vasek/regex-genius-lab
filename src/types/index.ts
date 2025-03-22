@@ -11,13 +11,17 @@ export interface TestCases {
   failing: string[];
 }
 
+export interface Iteration {
+  number: number;
+  testCases: TestCases;
+  agents: Agent[];
+}
+
 export interface GenerationState {
   userInput: string;
   isGenerating: boolean;
   currentIteration: number;
   maxIterations: number;
-  initialTestCases: TestCases;
-  newTestCases: TestCases;
-  agents: Agent[];
+  iterations: Iteration[];
   showResults: boolean;
 }

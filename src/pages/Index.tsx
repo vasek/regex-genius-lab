@@ -12,9 +12,7 @@ const Index = () => {
     isGenerating: false,
     currentIteration: 0,
     maxIterations: 5,
-    initialTestCases: { passing: [], failing: [] },
-    newTestCases: { passing: [], failing: [] },
-    agents: [],
+    iterations: [],
     showResults: false
   });
 
@@ -89,9 +87,7 @@ const Index = () => {
               userInput={state.userInput}
               currentIteration={state.currentIteration}
               maxIterations={state.maxIterations}
-              initialTestCases={state.initialTestCases}
-              newTestCases={state.newTestCases}
-              agents={state.agents}
+              iterations={state.iterations}
               isVisible={state.showResults}
             />
           </div>
